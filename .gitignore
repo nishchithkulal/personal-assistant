@@ -1,0 +1,63 @@
+# =========================
+
+# Environment Variables
+.env
+.env.*
+*.env
+
+# =========================
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+
+# Python
+**pycache**/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env/
+.venv/
+
+# =========================
+
+# n8n
+.n8n/
+n8n_data/
+
+# =========================
+
+# Logs
+logs/
+*.log
+
+# =========================
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# =========================
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# =========================
+
+# Docker (optional)
+*.pid
+*.seed
+
+# =========================
+
+# Temporary Files
+tmp/
+temp/
+
+# =========================
