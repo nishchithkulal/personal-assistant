@@ -1,4 +1,5 @@
 import { Client, GatewayIntentBits } from "discord.js";
+import axios from "axios";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "../.env" });
@@ -22,8 +23,17 @@ client.on("messageCreate", async (message) => {
 
   if (message.content.startsWith("!remind")) {
     const task = message.content.replace("!remind ", "");
+    try {
+      await axios.post("http://localhost:5678/webhook-test/reminder", {
+        task: task,
+        user: message.author.username,
+      });
 
-    message.reply(`✅ Reminder set for: ${task}`);
+      message.reply(`✅ Reminder sent to system: ${task}`);
+    } catch (error) {
+      console.error(error);
+      message.reply("❌ Failed to connect to n8n");
+    }
   }
 });
 
