@@ -1,29 +1,36 @@
-export function parseRemindCommand(content) {
-  const parts = content.trim().split(/\s+/);
-
-  if (parts.length < 3) {
-    return { error: "Invalid format" };
-  }
-
-  const time = parts[1].toLowerCase();
-  const task = parts.slice(2).join(" ");
-
-  const match = time.match(/^(\d+)(m|h)$/);
+export function parseReminder(input) {
+  const match = input.match(/^(\d+)([smhd])\s+(.+)$/);
 
   if (!match) {
-    return { error: "Invalid time format" };
+    return { valid: false };
   }
 
   const value = parseInt(match[1]);
   const unit = match[2];
+  const task = match[3];
 
-  if (unit === "m" && value < 1) {
-    return { error: "Minimum time is 1 minute" };
+  let delay = 0;
+
+  switch (unit) {
+    case "s":
+      delay = value * 1000;
+      break;
+    case "m":
+      delay = value * 60 * 1000;
+      break;
+    case "h":
+      delay = value * 60 * 60 * 1000;
+      break;
+    case "d":
+      delay = value * 24 * 60 * 60 * 1000;
+      break;
+    default:
+      return { valid: false };
   }
 
-  if (unit === "h" && value > 24) {
-    return { error: "Maximum 24 hours allowed" };
-  }
-
-  return { time, task, value, unit };
+  return {
+    valid: true,
+    delay,
+    task,
+  };
 }

@@ -6,13 +6,14 @@ services:
       - "5678:5678"
     volumes:
       - ./n8n_data:/home/node/.n8n
+      - ./workflows:/workflows
     environment:
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=admin
       - N8N_BASIC_AUTH_PASSWORD=admin123
       - N8N_HOST=localhost
       - N8N_PORT=5678
-      - WEBHOOK_URL=http://n8n:5678
+      - WEBHOOK_URL=http://n8n.nishchith-kulal.co.in
       - GENERIC_TIMEZONE=Asia/Kolkata
     restart: unless-stopped
 

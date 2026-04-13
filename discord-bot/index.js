@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import { DISCORD_TOKEN } from "./config/env.js";
-import { handleRemind } from "./commands/remind.js";
+import { ENV } from "./config/env.js";
+import handleRemind from "./commands/remind.js";
 
 const client = new Client({
   intents: [
@@ -10,18 +10,16 @@ const client = new Client({
   ],
 });
 
-client.once("ready", () => {
+client.once("clientReady", () => {
   console.log(`🤖 Bot is online as ${client.user.tag}`);
 });
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  const content = message.content.trim().toLowerCase();
-
-  if (content.startsWith("!remind")) {
-    return handleRemind(message);
+  if (message.content.startsWith("!remind")) {
+    await handleRemind(message);
   }
 });
 
-client.login(DISCORD_TOKEN);
+client.login(ENV.DISCORD_TOKEN);
