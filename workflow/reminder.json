@@ -1,0 +1,113 @@
+{
+  "name": "remind bot - discord",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reminder",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        96
+      ],
+      "id": "7e59d1e3-35e5-46be-9875-2de4e1613e23",
+      "name": "Webhook",
+      "webhookId": "992ef885-7989-4a87-987b-b16acff9f960"
+    },
+    {
+      "parameters": {
+        "jsCode": "const time = $json.body.time;\n\nlet seconds = 0;\n\nif (time.endsWith(\"m\")) {\n  seconds = parseInt(time) * 60;\n} else if (time.endsWith(\"h\")) {\n  seconds = parseInt(time) * 60 * 60;\n}\n\nreturn [\n  {\n    json: {\n      ...$json.body,\n      waitSeconds: seconds\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        112,
+        96
+      ],
+      "id": "43126fdd-2a3c-4962-83be-fa4f9f5db307",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.waitSeconds }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        96
+      ],
+      "id": "18489533-ef5d-470a-ab92-e6fe154867b1",
+      "name": "Wait",
+      "webhookId": "5604d431-1138-49fd-9cf7-5e3a5d389f38"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discordapp.com/api/webhooks/1492886386615910413/QYxZox3Al5or_owrWOpcMqrTFsyXK8rSrLWE7PFaxjPAPY1eEuESi_JpT-E0aTfZlKkY",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"<@{{$json.userId}}> ⏰ Reminder: {{$json.task}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        528,
+        96
+      ],
+      "id": "172cc088-f352-4010-8617-db29d5074d20",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "07078744-d207-4c31-9735-562f94402b79",
+  "meta": {
+    "instanceId": "7fcd2a942c604693dca80ba0402e1ba1f90fb9e843fff27e4d502c561741fee6"
+  },
+  "id": "838KQurV6GUsOb8A",
+  "tags": []
+}
