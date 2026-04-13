@@ -5,7 +5,7 @@ dotenv.config({ path: "../.env" });
 
 export const ENV = {
   DISCORD_TOKEN: process.env.DISCORD_TOKEN,
-  N8N_WEBHOOK_URL: process.env.N8N_WEBHOOK_URL || "http://n8n:5678/webhook/reminder",
+  N8N_WEBHOOK_URL: process.env.N8N_WEBHOOK_URL,
 };
 
 // Optional safety check

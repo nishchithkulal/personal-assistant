@@ -19,19 +19,6 @@
     },
     {
       "parameters": {
-        "jsCode": "const time = $json.body.time;\n\nlet seconds = 0;\n\nif (time.endsWith(\"m\")) {\n  seconds = parseInt(time) * 60;\n} else if (time.endsWith(\"h\")) {\n  seconds = parseInt(time) * 60 * 60;\n}\n\nreturn [\n  {\n    json: {\n      ...$json.body,\n      waitSeconds: seconds\n    }\n  }\n];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        112,
-        96
-      ],
-      "id": "43126fdd-2a3c-4962-83be-fa4f9f5db307",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
         "amount": "={{ $json.waitSeconds }}"
       },
       "type": "n8n-nodes-base.wait",
@@ -61,6 +48,19 @@
       ],
       "id": "172cc088-f352-4010-8617-db29d5074d20",
       "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const time = $json.body.delay / 1000;\n\n\n\nreturn [\n  {\n    json: {\n      ...$json.body,\n      waitSeconds: time\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        112,
+        96
+      ],
+      "id": "43126fdd-2a3c-4962-83be-fa4f9f5db307",
+      "name": "Code in JavaScript"
     }
   ],
   "pinData": {},
@@ -70,17 +70,6 @@
         [
           {
             "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "Wait",
             "type": "main",
             "index": 0
           }
@@ -97,6 +86,17 @@
           }
         ]
       ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -104,7 +104,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "07078744-d207-4c31-9735-562f94402b79",
+  "versionId": "42074853-eb3d-457d-8d0b-c7a94404ecac",
   "meta": {
     "instanceId": "7fcd2a942c604693dca80ba0402e1ba1f90fb9e843fff27e4d502c561741fee6"
   },
