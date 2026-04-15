@@ -3,23 +3,17 @@
 echo "📥 Pulling latest code..."
 git pull origin main
 
-echo "🐳 Starting containers..."
-docker compose up -d --build || exit 1
+echo "🐳 Starting bot..."
+docker compose up -d --build
 
-echo "⏳ Waiting for n8n to be ready..."
-sleep 20
+echo "⏳ Waiting for n8n..."
+sleep 10
 
-echo "📂 Importing workflows..."
+echo "📂 Syncing workflows..."
 
-shopt -s nullglob
-
-for file in ./workflows/*.json; do
-  name=$(basename "$file")
-
-  echo "➡️ Processing $name"
-
-  echo "📥 Importing $name..."
-  docker exec -i personal-assistant-n8n n8n import:workflow --input="/workflows/$name"
+for file in workflows/*.json; do
+  echo "➡️ Syncing $file"
+  docker exec -i n8n n8n import:workflow --input=$file --activate --overwrite
 done
 
 echo "✅ Deployment complete!"
