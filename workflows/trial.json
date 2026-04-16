@@ -1,0 +1,105 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -256,
+        -48
+      ],
+      "id": "715bdb04-8c6c-4d24-a184-5ce644f231a6",
+      "name": "When chat message received",
+      "webhookId": "64a81d0a-c37b-4622-982a-a06775fb1ff0"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "hellonhi",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -48,
+        -48
+      ],
+      "id": "da849eb7-b65c-4daa-a07e-025239842509",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "path": "025cb870-9484-48b2-8e93-3bcfc8b0c656",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -560,
+        144
+      ],
+      "id": "a4edb0c8-4986-4ff9-af7f-ddb9dcd495ad",
+      "name": "Webhook",
+      "webhookId": "025cb870-9484-48b2-8e93-3bcfc8b0c656"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-5-20250929",
+          "cachedResultName": "Claude Sonnet 4.5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        144
+      ],
+      "id": "7f3a5603-980e-4a35-8ce9-3bd948547b82",
+      "name": "Anthropic Chat Model"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f90366a3-d77d-494a-851d-179544d84f91",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7e50ac4ec111af65f573dfddbcdce6cee0504b2c834b4e2a3fc608844be25dc6"
+  },
+  "id": "L9iCJtMWiI9E0hQG",
+  "tags": []
+}
